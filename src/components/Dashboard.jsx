@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { Outlet } from "react-router-dom"
 import { Table, Button } from 'react-bootstrap'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
-function Dashboard({ data: { data, user, setUser } }) {
+import { UserContext } from '../App'
+function Dashboard(props) {
 
     let navigate = useNavigate()
+    let context = useContext(UserContext)
+
     const handleDelete = (i) => {
-        let data = [...user]
+        let data = [...context.user]
         data.splice(i, 1)
-        setUser(data)
+        context.setUser(data)
     }
     return <>
 
@@ -34,7 +37,7 @@ function Dashboard({ data: { data, user, setUser } }) {
                                 <div className="col mr-2">
                                     <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Earnings (Monthly)</div>
-                                    <div className="h5 mb-0 font-weight-bold text-gray-800">${data.monthly}</div>
+                                    <div className="h5 mb-0 font-weight-bold text-gray-800">${props.data.monthly}</div>
                                 </div>
                                 <div className="col-auto">
                                     <i className="fas fa-calendar fa-2x text-gray-300"></i>
@@ -52,7 +55,7 @@ function Dashboard({ data: { data, user, setUser } }) {
                                 <div className="col mr-2">
                                     <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         Earnings (Annual)</div>
-                                    <div className="h5 mb-0 font-weight-bold text-gray-800">${data.yearly}</div>
+                                    <div className="h5 mb-0 font-weight-bold text-gray-800">${props.data.yearly}</div>
                                 </div>
                                 <div className="col-auto">
                                     <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -72,12 +75,12 @@ function Dashboard({ data: { data, user, setUser } }) {
                                     </div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="col-auto">
-                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{data.task}%</div>
+                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{props.data.task}%</div>
                                         </div>
                                         <div className="col">
                                             <div className="progress progress-sm mr-2">
                                                 <div className="progress-bar bg-info" role="progressbar"
-                                                    style={{ "width": `${data.task}%` }} aria-valuenow={data.task} aria-valuemin="0"
+                                                    style={{ "width": `${props.data.task}%` }} aria-valuenow={props.data.task} aria-valuemin="0"
                                                     aria-valuemax="100"></div>
                                             </div>
                                         </div>
@@ -99,7 +102,7 @@ function Dashboard({ data: { data, user, setUser } }) {
                                 <div className="col mr-2">
                                     <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         Pending Requests</div>
-                                    <div className="h5 mb-0 font-weight-bold text-gray-800">{data.pending}</div>
+                                    <div className="h5 mb-0 font-weight-bold text-gray-800">{props.data.pending}</div>
                                 </div>
                                 <div className="col-auto">
                                     <i className="fas fa-comments fa-2x text-gray-300"></i>
@@ -128,8 +131,8 @@ function Dashboard({ data: { data, user, setUser } }) {
                     </thead>
                     <tbody>
                         {
-                            user.map((u, i) => {
-                                return <tr>
+                            context.user.map((u, i) => {
+                                return <tr key={i}>
                                     <td>{i + 1}</td>
                                     <td>{u.firstName}</td>
                                     <td>{u.lastName}</td>
