@@ -75,7 +75,7 @@ function App() {
                   <Route path="account" element={<Account />} />
                 </Route>
                 <Route path="/add-user" element={<CreateUser />} />
-                <Route path="/edit-user/:id" element={<EditUser data={{ user, setUser }} />} />
+                <Route path="/edit-user/:id" element={<EditUser />} />
                 <Route path="*" element={<Navigate to="/dashboard" />} />
               </Routes>
 

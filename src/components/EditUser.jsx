@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
-
-const EditUser = (props) => {
+import { UserContext } from '../App'
+const EditUser = () => {
   const params = useParams()
-  const [firstName, setFname] = useState(props.data.user[params.id].firstName)
-  const [lastName, setLname] = useState(props.data.user[params.id].lastName)
-  const [email, setEmail] = useState(props.data.user[params.id].email)
-  const [phone, setPhone] = useState(props.data.user[params.id].phone)
-  const [dob, setDob] = useState(props.data.user[params.id].dob)
-  const [location, setLocation] = useState(props.data.user[params.id].location)
+  let context = useContext(UserContext)
+  const [firstName, setFname] = useState(context.user[params.id].firstName)
+  const [lastName, setLname] = useState(context.user[params.id].lastName)
+  const [email, setEmail] = useState(context.user[params.id].email)
+  const [phone, setPhone] = useState(context.user[params.id].phone)
+  const [dob, setDob] = useState(context.user[params.id].dob)
+  const [location, setLocation] = useState(context.user[params.id].location)
 
   const navigate = useNavigate()
 
@@ -22,9 +23,9 @@ const EditUser = (props) => {
       dob,
       location
     }
-    const user = [...props.data.user]
+    const user = [...context.user]
     user.splice(params.id, 1, data)
-    props.data.setUser(user)
+    context.setUser(user)
     navigate('/dashboard')
 
   }
